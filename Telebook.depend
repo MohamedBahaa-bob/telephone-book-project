@@ -1,0 +1,19 @@
+# depslib dependency file v1.0
+1576678536 source:c:\users\nouh\downloads\atom\2\main.c
+	<stdio.h>
+	<stdlib.h>
+	<math.h>
+	<string.h>
+
+1576678536 source:c:\users\nouh\downloads\atom\telebook\main.c
+	<stdio.h>
+	<stdlib.h>
+	<math.h>
+	<string.h>
+
+1577041822 source:c:\users\nouh\downloads\atom\telephone book\main.c
+	<stdio.h>
+	<stdlib.h>
+	<math.h>
+	<string.h>
+
