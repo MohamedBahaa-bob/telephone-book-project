@@ -2,12 +2,17 @@
 #include <stdlib.h>
 #include <math.h>
 #include <string.h>
-int i=0;char line[100]; int ending,temp=-1,nooflname=0,flag=0,identifier,msearch=0,printed=0; float validifier;
+
+char line[100];
+int i=0,ending,temp=-1,nooflname=0,flag=0,identifier,msearch=0,printed=0;
+float validifier;
+
 typedef struct{
     int day;
     int month;
     int year;
 }Birth;
+
 typedef struct {
     char first_name[20];
     char last_name[20];
@@ -16,9 +21,23 @@ typedef struct {
     char email[50];
     int phone_number;
 }Person;
-void load(FILE*); void search();int add();int delete_record();void modify(FILE*);
-void print_sort();int quit();void sort_by_DOB();void sort_by_lastName();
+
+void load(FILE*);
+void search();
+int add();
+int delete_record();
+void modify(FILE*);
+void print_sort();
+int quit();
+void sort_by_DOB();
+void sort_by_lastName();
+
 Person names [100];
+
+/***
+To read the information of every contact and store each one's data in a separate array according to type of data
+***/
+
 void load(FILE *fp){
     i=0; char *token;
         fp=fopen("phonebook.txt","r");
@@ -28,22 +47,39 @@ void load(FILE *fp){
         }
         while(!feof(fp)){
         fscanf(fp,"%[^\n]\n",line);
+
         token=strtok(line,",");
+
         strcpy(names[i].last_name,token);
+
         token=strtok(NULL,",");
+
         strcpy(names[i].first_name,token);
+
         token=strtok(NULL,"-");
+
         names[i].birth.day=atoi(token);
+
         token=strtok(NULL,"-");
+
         names[i].birth.month=atoi(token);
+
         token=strtok(NULL,",");
+
         names[i].birth.year=atoi(token);
+
         token=strtok(NULL,",");
+
         strcpy(names[i].address,token);
+
         token=strtok(NULL,",");
+
         strcpy(names[i].email,token);
+
         token=strtok(NULL,",");
+
         names[i].phone_number=atoi(token);
+
         printf("First name:%s\n",names[i].first_name);
         printf("Last name:%s\n",names[i].last_name);
         printf("Date of Birth:%d/%d/%d\n",names[i].birth.day,names[i].birth.month,names[i].birth.year);
@@ -54,6 +90,12 @@ void load(FILE *fp){
 }
         i--;
         }
+
+/***
+To search for a specific contact either by means of last name or by a detailed search which allows user to
+insert other fields to search by
+***/
+
 void search(){
         printf("Choose searching method\nEnter 1 for searching by last name or 0 for multi search\n");
         scanf("%d", &identifier);
@@ -61,7 +103,9 @@ void search(){
         char comp[50];
         printf("Insert last name:");
         scanf("%s",comp);
+
         i=0;int j=0,cmp;
+
         while(i<=ending){
             cmp=strcasecmp(comp,names[i].last_name);
             if( cmp==0 && j!=0){
@@ -89,29 +133,46 @@ void search(){
 }else if(identifier==0){
         char sfname[20],saddress[50],slname[20],semail[50],sphone[20],null[5]={'\0'},bluff;
         ending++;
+
         printf("Press enter to skip a search field\n");
+
         scanf("%c", &bluff);
+
         printf("Please enter first name\n");
+
         gets(sfname);
+
         printf("Please enter last name\n");
+
         gets(slname);
+
         printf("Please enter address\n");
+
         gets(saddress);
+
         printf("Please enter email\n");
+
         gets(semail);
+
         printf("Enter phone number\n");
+
         gets(sphone);
         for(i=0;i<ending;i++){msearch=0;
             if((!strcasecmp(sfname,names[i].first_name))||(!strcmp(sfname,null))){
                 msearch++;}
+
             if((!strcasecmp(slname,names[i].last_name))||(!strcmp(slname,null))){
                 msearch++;}
+
             if((!strcasecmp(saddress,names[i].address))||(!strcmp(saddress,null))){
                 msearch++;}
+
             if((!strcasecmp(semail,names[i].email))||(!strcmp(semail,null))){
                 msearch++;}
+
             if(names[i].phone_number==atoi(sphone)||(!strcmp(sphone,null))){
                 msearch++;}
+
             if(msearch==5){
                 printf("First name:%s\n",names[i].first_name);
                 printf("Address:%s\n",names[i].address);
@@ -119,6 +180,7 @@ void search(){
                 printf("Phone number:0%d\n\n",names[i].phone_number);
                 printed=1;
             }}
+
             if(printed!=1){
             printf("There is no record that matches these entries\n");}
 
@@ -129,15 +191,25 @@ void search(){
     }
 }
 }
+
+/***
+To add a new contact to the telephone book
+***/
+
 int add(){
-                char bluff;int cname,finalchar;
+                char bluff;
+                int cname,finalchar;
                 printf("Insert first name of new record:");
                 do{
                     flag=0;
                     scanf("%s",names[ending].first_name);
                 cname=0;
                 while(names[ending].first_name[cname]!='\0'){
-                    if(names[ending].first_name[cname]=='0' || names[ending].first_name[cname]=='1' || names[ending].first_name[cname]=='2' || names[ending].first_name[cname]=='3' ||names[ending].first_name[cname]=='4' || names[ending].first_name[cname]=='5' || names[ending].first_name[cname]=='6' || names[ending].first_name[cname]=='7' || names[ending].first_name[cname]=='8' || names[ending].first_name[cname]=='9'){
+                    if(names[ending].first_name[cname]=='0' || names[ending].first_name[cname]=='1' ||
+                       names[ending].first_name[cname]=='2' || names[ending].first_name[cname]=='3' ||
+                       names[ending].first_name[cname]=='4' || names[ending].first_name[cname]=='5' ||
+                       names[ending].first_name[cname]=='6' || names[ending].first_name[cname]=='7' ||
+                       names[ending].first_name[cname]=='8' || names[ending].first_name[cname]=='9'){
                             flag=1;
                             printf("Invalid entry!\nPlease reenter name:");
                             break;
@@ -146,13 +218,18 @@ int add(){
                 }
                 }while(flag==1);
                 printf("Insert last name:");
+
                  do{
                     flag=0;
                     scanf("%s",names[ending].last_name);
                 cname=0;
+
                 while(names[ending].last_name[cname]!='\0'){
-                    if(names[ending].last_name[cname]=='0' || names[ending].last_name[cname]=='1' || names[ending].last_name[cname]=='2' || names[ending].last_name[cname]=='3' ||names[ending].last_name[cname]=='4' || names[ending].last_name[cname]=='5'
-                       || names[ending].last_name[cname]=='6' || names[ending].last_name[cname]=='7' || names[ending].last_name[cname]=='8' || names[ending].last_name[cname]=='9'){
+                    if(names[ending].last_name[cname]=='0' || names[ending].last_name[cname]=='1' ||
+                       names[ending].last_name[cname]=='2' || names[ending].last_name[cname]=='3' ||
+                       names[ending].last_name[cname]=='4' || names[ending].last_name[cname]=='5' ||
+                       names[ending].last_name[cname]=='6' || names[ending].last_name[cname]=='7' ||
+                       names[ending].last_name[cname]=='8' || names[ending].last_name[cname]=='9'){
                             flag=1;
                             printf("Invalid entry!\nPlease reenter name:");
                             break;
@@ -160,24 +237,31 @@ int add(){
                     cname++;
                 }
                 }while(flag==1);
+
                 printf("Insert day of birth:");
                 scanf("%d",&names[ending].birth.day);
+
                 while(names[ending].birth.day<1 || names[ending].birth.day>31){
                     printf("Invalid day!\nPlease reenter day of birth:");
                     scanf("%d",&names[ending].birth.day);
                 }
+
                 printf("Insert month of birth:");
                 scanf("%d",&names[ending].birth.month);
+
                 while(names[ending].birth.month<1 || names[ending].birth.month>12){
                     printf("Invalid month!\nPlease reenter month of birth:");
                     scanf("%d",&names[ending].birth.month);
                 }
+
                 printf("Insert year of birth:");
                 scanf("%d",&names[ending].birth.year);
+
                 while(names[ending].birth.year<1900 || names[ending].birth.year>2019){
                     printf("Invalid year!\n Please reenter year of birth:");
                     scanf("%d",&names[ending].birth.year);
                 }
+
                 printf("Insert address:");
                 scanf("%c",&bluff);
                 scanf("%[^\n]",names[ending].address);
@@ -199,7 +283,9 @@ int add(){
                 }while(flag!=1);
                 printf("Insert phone number:");
                 scanf("%d",&names[ending].phone_number);
+
                 validifier=(1.0*names[ending].phone_number)/pow(10,10);
+
                 while(!(validifier>0.1&&validifier<1)){
                     printf("Invalid number of digits,\nPlease enter an 11 digit number:");
                     scanf("%d",&names[ending].phone_number);
@@ -209,24 +295,35 @@ int add(){
                 return ++ending;
 
 }
+
+/***
+To delete one of the contacts that already exists in the telephone book
+***/
+
 int delete_record(){
-            char first[20],last[20];int deletecmp1,deletecmp2,temp1,flag=0,choice,k;
+            char first[20],last[20];
+            int deletecmp1,deletecmp2,temp1,flag=0,choice,k;
+
             printf("Insert first name of record to be deleted:");
             scanf("%s",first);
+
             printf("Insert last name of record to be deleted:");
             scanf("%s",last);
             i=0;
+
             printf("ending is:%d",ending);
             while(i<=ending){
                 deletecmp1=strcasecmp(first,names[i].first_name);
                 deletecmp2=strcasecmp(last,names[i].last_name);
                 if(deletecmp1==0 && deletecmp2==0){
-        printf("First name:%s\n",names[i].first_name);
-        printf("Last name:%s\n",names[i].last_name);
-        printf("Date of Birth:%d/%d/%d\n",names[i].birth.day,names[i].birth.month,names[i].birth.year);
-        printf("Address:%s\n",names[i].address);
-        printf("Email:%s\n",names[i].email);
-        printf("Phone number:0%d\n\n",names[i].phone_number);
+
+                printf("First name:%s\n",names[i].first_name);
+                printf("Last name:%s\n",names[i].last_name);
+                printf("Date of Birth:%d/%d/%d\n",names[i].birth.day,names[i].birth.month,names[i].birth.year);
+                printf("Address:%s\n",names[i].address);
+                printf("Email:%s\n",names[i].email);
+                printf("Phone number:0%d\n\n",names[i].phone_number);
+
                  flag=1;
                  printf("Is this the record you want to to delete?\nIf yes please enter 1,else enter any number:");
                  scanf("%d",&choice);
@@ -246,10 +343,16 @@ int delete_record(){
             else return --ending;
 
 }
+
+/***
+To alter the data of a certain contact by first searching for that contact then specifying which field you would like to alter
+***/
+
 void modify(FILE*fp)
 {
     ending++;
-    char bluff;int cname,finalchar;
+    char bluff;
+    int cname,finalchar;
     printf("Enter last name you want to modify\n");
     char wanted_name[20];
     scanf("%s",wanted_name);
@@ -264,20 +367,24 @@ void modify(FILE*fp)
                 printf("Insert first name of new record:");
                 scanf("%s",names[i].first_name);
                 printf("Inset last name:");
-                                 do{
+                do{
                     flag=0;
                     scanf("%s",names[ending].last_name);
-                cname=0;
+                    cname=0;
                 while(names[ending].last_name[cname]!='\0'){
-                    if(names[ending].last_name[cname]=='0' || names[ending].last_name[cname]=='1' || names[ending].last_name[cname]=='2' || names[ending].last_name[cname]=='3' ||names[ending].last_name[cname]=='4' || names[ending].last_name[cname]=='5'
-                       || names[ending].last_name[cname]=='6' || names[ending].last_name[cname]=='7' || names[ending].last_name[cname]=='8' || names[ending].last_name[cname]=='9'){
+                    if(names[ending].last_name[cname]=='0' || names[ending].last_name[cname]=='1' ||
+                       names[ending].last_name[cname]=='2' || names[ending].last_name[cname]=='3' ||
+                       names[ending].last_name[cname]=='4' || names[ending].last_name[cname]=='5' ||
+                       names[ending].last_name[cname]=='6' || names[ending].last_name[cname]=='7' ||
+                       names[ending].last_name[cname]=='8' || names[ending].last_name[cname]=='9'){
                             flag=1;
                             printf("Invalid entry!\nPlease reenter name:");
                             break;
                     }
                     cname++;
                 }
-                }while(flag==1);
+                }
+                while(flag==1);
                 printf("Insert day of birth:");
                 scanf("%d",&names[i].birth.day);
                 while(names[i].birth.day<1 || names[i].birth.day>31){
@@ -309,15 +416,20 @@ void modify(FILE*fp)
                 finalchar=cname;
                     cname=0;
                     while(names[ending].email[cname]!='\0'){
-                    if(names[ending].email[cname]=='@' &&names[ending].email[finalchar-4]=='.'
-                       &&names[ending].email[finalchar-3]=='c' &&names[ending].email[finalchar-2]=='o'&&names[ending].email[finalchar-1]=='m'){ flag=1;}
+                    if(names[ending].email[cname]=='@'
+                       &&names[ending].email[finalchar-4]=='.'
+                       &&names[ending].email[finalchar-3]=='c'
+                       &&names[ending].email[finalchar-2]=='o'
+                       &&names[ending].email[finalchar-1]=='m'){ flag=1;}
                     cname++;
                     }
                     if(flag!=1) printf("Invalid entry!\nPlease reenter email:");
                 }while(flag!=1);
                 printf("Insert phone number:");
                 scanf("%d",&names[i].phone_number);
+
                 validifier=(1.0*names[i].phone_number)/pow(10,10);
+
                 while(!(validifier>0.1&&validifier<1)){
                     printf("Invalid number of digits\nPlease enter an 11 digit number");
                     scanf("%d",&names[i].phone_number);
@@ -379,7 +491,7 @@ void modify(FILE*fp)
 
 void sort_by_lastName(){
         int k,temp2,cmp1;
-     for(i=0;i<ending-1;i++){
+        for(i=0;i<ending-1;i++){
         for(k=0;k<ending-i-1;k++){
             temp2=k;
             cmp1=strcasecmp(names[k].last_name,names[++temp2].last_name);
@@ -392,6 +504,11 @@ void sort_by_lastName(){
         }
      }
 }
+
+/***
+To sort the contacts by means of date of birth in ascending form
+***/
+
 void sort_by_DOB(){
     int temp2,k;
     for(i=0;i<ending-1;i++){
@@ -402,22 +519,25 @@ void sort_by_DOB(){
                 names[k]=names[k+1];
                 names[k+1]=names[101];
                 }
-                else if(names[k].birth.year==names[temp2].birth.year && names[k].birth.month>names[temp2].birth.month){
+                else if(names[k].birth.year==names[temp2].birth.year &&
+                        names[k].birth.month>names[temp2].birth.month){
                 names[101]=names[k];
                 names[k]=names[k+1];
                 names[k+1]=names[101];
                 }
-                else if(names[k].birth.year==names[temp2].birth.year && names[k].birth.month==names[temp2].birth.month
-                        && names[k].birth.day>names[temp2].birth.day){
-                            names[101]=names[k];
-                            names[k]=names[k+1];
-                            names[k+1]=names[101];
+                else if(names[k].birth.year==names[temp2].birth.year &&
+                        names[k].birth.month==names[temp2].birth.month &&
+                        names[k].birth.day>names[temp2].birth.day){
+                        names[101]=names[k];
+                        names[k]=names[k+1];
+                        names[k+1]=names[101];
                         }
 
         }
     }
 
 }
+
 void print_sort(){
     i=0; int k,temp2,choice;
     int cmp1;
@@ -446,12 +566,21 @@ void print_sort(){
 }
 printf("\nSuccessfully sorted!\n");
 }
+
+/***
+To write the updated version in a comma separated value form before quitting
+***/
+
 void save(FILE*fp){
     fp=fopen("project.txt","w");
                 i=0;
                 printf("ending is:%d",ending);
                 while(i<ending){
-                    fprintf(fp,"%s,%s,%d-%d-%d,%s,%s,%d\n",names[i].last_name,names[i].first_name,names[i].birth.day,names[i].birth.month,names[i].birth.year,names[i].address,names[i].email,names[i].phone_number);
+                    fprintf(fp,"%s,%s,%d-%d-%d,%s,%s,%d\n",names[i].last_name,
+                            names[i].first_name,names[i].birth.day,
+                            names[i].birth.month,names[i].birth.year,
+                            names[i].address,names[i].email,
+                            names[i].phone_number);
                     ++i;
                 }
                 fclose(fp);
@@ -468,15 +597,24 @@ int main()
     FILE *fp,*fp2;
     printf("\t\t\t Welcome to the Telebook \t\t\t\n\t\t\t ______________________");
     printf("\n\tMenu\n\t____\n1.Load\n2.Search\n3.Add\n4.Delete\n5.Modify\n6.Sort\n7.Save\n8.Quit\n\nPlease load the file first by pressing 1,\n");
-    int option,deletecmp3,choice,loaded; char comp[100],line1[100],emp[10],ch='0';
+
+    int option,deletecmp3,choice,loaded;
+
+    char comp[100],line1[100],emp[10],ch='0';
+
     strcpy(emp,"\0");
-    do{printf("Insert option:");
+
+    do{
+    printf("Insert option:");
     scanf("%d",&option);
+
     while(option>8 || option<1){
         printf("Invalid entry, please enter a valid option:");
         scanf("%d",&option);
     }
+
     printf("\nRunning your choice...\n\n");
+
     switch(option){
         case 1:
             loaded=1;
@@ -484,39 +622,46 @@ int main()
             temp=i+1;
             ending=temp;
         break;
+
         case 2:
             if(loaded!=1){
             break;}
         search();
         break;
+
         case 3:
             if(loaded!=1){
             break;}
             temp=add();
             ending=temp;
             break;
+
         case 4:
             if(loaded!=1){
             break;}
             temp=delete_record(fp);
             ending=temp;
             break;
+
         case 5:
             if(loaded!=1){
             break;}
             modify(fp);
             break;
+
         case 6:
             if(loaded!=1){
             break;}
             print_sort();
             ending=temp;
             break;
+
         case 7:
             if(loaded!=1){
             break;}
             save(fp);
             break;
+
         case 8:
         option=quit();
         break;
