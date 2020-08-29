@@ -46,8 +46,10 @@ void load(FILE *fp){
             exit(0);
         }
         while(!feof(fp)){
+        //To read the whole line which will then be tokenized
         fscanf(fp,"%[^\n]\n",line);
-
+        //Strtok is used in tokenizing the line where the delimiter is the comma, 
+        //so every piece of information seperated by a comma is stored seperately
         token=strtok(line,",");
 
         strcpy(names[i].last_name,token);
@@ -55,7 +57,8 @@ void load(FILE *fp){
         token=strtok(NULL,",");
 
         strcpy(names[i].first_name,token);
-
+        //The delimiter here is the hyphen as the date is seperated using it(dd-mm-yyyy)
+        //atoi is used to convert the string "token" into an integer to be stored
         token=strtok(NULL,"-");
 
         names[i].birth.day=atoi(token);
@@ -79,7 +82,7 @@ void load(FILE *fp){
         token=strtok(NULL,",");
 
         names[i].phone_number=atoi(token);
-
+        //Printing the line after being seperated
         printf("First name:%s\n",names[i].first_name);
         printf("Last name:%s\n",names[i].last_name);
         printf("Date of Birth:%d/%d/%d\n",names[i].birth.day,names[i].birth.month,names[i].birth.year);
@@ -204,6 +207,7 @@ int add(){
                     flag=0;
                     scanf("%s",names[ending].first_name);
                 cname=0;
+                //To check that name doesn't include a number by mistake
                 while(names[ending].first_name[cname]!='\0'){
                     if(names[ending].first_name[cname]=='0' || names[ending].first_name[cname]=='1' ||
                        names[ending].first_name[cname]=='2' || names[ending].first_name[cname]=='3' ||
@@ -223,7 +227,7 @@ int add(){
                     flag=0;
                     scanf("%s",names[ending].last_name);
                 cname=0;
-
+                //To check that name doesn't include a number by mistake
                 while(names[ending].last_name[cname]!='\0'){
                     if(names[ending].last_name[cname]=='0' || names[ending].last_name[cname]=='1' ||
                        names[ending].last_name[cname]=='2' || names[ending].last_name[cname]=='3' ||
@@ -240,7 +244,7 @@ int add(){
 
                 printf("Insert day of birth:");
                 scanf("%d",&names[ending].birth.day);
-
+                //Validating the day of birth not being less than 1 or more than day 31 of month
                 while(names[ending].birth.day<1 || names[ending].birth.day>31){
                     printf("Invalid day!\nPlease reenter day of birth:");
                     scanf("%d",&names[ending].birth.day);
@@ -248,7 +252,7 @@ int add(){
 
                 printf("Insert month of birth:");
                 scanf("%d",&names[ending].birth.month);
-
+                //Validating the month of birth not being less than 1 or more than month 12 of year
                 while(names[ending].birth.month<1 || names[ending].birth.month>12){
                     printf("Invalid month!\nPlease reenter month of birth:");
                     scanf("%d",&names[ending].birth.month);
@@ -256,7 +260,7 @@ int add(){
 
                 printf("Insert year of birth:");
                 scanf("%d",&names[ending].birth.year);
-
+                //Validating the year of birth being within a reasonable range
                 while(names[ending].birth.year<1900 || names[ending].birth.year>2019){
                     printf("Invalid year!\n Please reenter year of birth:");
                     scanf("%d",&names[ending].birth.year);
@@ -274,9 +278,11 @@ int add(){
                         cname++;}
                 finalchar=cname;
                     cname=0;
+                    //To make sure that email contains "@" and ".com"
                     while(names[ending].email[cname]!='\0'){
-                    if(names[ending].email[cname]=='@' &&names[ending].email[finalchar-4]=='.'
-                       &&names[ending].email[finalchar-3]=='c' &&names[ending].email[finalchar-2]=='o'&&names[ending].email[finalchar-1]=='m'){ flag=1;}
+                    if(names[ending].email[cname]=='@' && names[ending].email[finalchar-4]=='.'&&
+                    names[ending].email[finalchar-3]=='c' && names[ending].email[finalchar-2]=='o'&& 
+                    names[ending].email[finalchar-1]=='m'){ flag=1;}
                     cname++;
                     }
                     if(flag!=1) printf("Invalid entry!\nPlease reenter email:");
