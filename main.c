@@ -377,6 +377,7 @@ void modify(FILE*fp)
                     flag=0;
                     scanf("%s",names[ending].last_name);
                     cname=0;
+                //To check that name doesn't include a number by mistake
                 while(names[ending].last_name[cname]!='\0'){
                     if(names[ending].last_name[cname]=='0' || names[ending].last_name[cname]=='1' ||
                        names[ending].last_name[cname]=='2' || names[ending].last_name[cname]=='3' ||
@@ -393,18 +394,21 @@ void modify(FILE*fp)
                 while(flag==1);
                 printf("Insert day of birth:");
                 scanf("%d",&names[i].birth.day);
+                //Validating the day of birth not being less than 1 or more than day 31 of month
                 while(names[i].birth.day<1 || names[i].birth.day>31){
                     printf("Invalid day!\nPlease reenter day of birth:");
                     scanf("%d",&names[i].birth.day);
                 }
                 printf("Insert month of birth:");
                 scanf("%d",&names[i].birth.month);
+                //Validating the month of birth not being less than 1 or more than month 12 of year
                 while(names[i].birth.month<1 || names[i].birth.month>12){
                     printf("Invalid month!\nPlease reenter month of birth:");
                     scanf("%d",&names[i].birth.month);
                 }
                 printf("Insert year of birth:");
                 scanf("%d",&names[i].birth.year);
+                //Validating the year of birth being within a reasonable range
                 while(names[i].birth.year<1900 || names[i].birth.year>2019){
                     printf("Invalid year!\n Please reenter year of birth:");
                     scanf("%d",&names[i].birth.year);
@@ -421,6 +425,7 @@ void modify(FILE*fp)
                         cname++;}
                 finalchar=cname;
                     cname=0;
+                    //Making sure email contains "@" and ".com"
                     while(names[ending].email[cname]!='\0'){
                     if(names[ending].email[cname]=='@'
                        &&names[ending].email[finalchar-4]=='.'
@@ -456,18 +461,21 @@ void modify(FILE*fp)
                 scanf("%s",names[i].last_name);
                 printf("Insert day of birth:");
                 scanf("%d",&names[i].birth.day);
+                //Validating the day of birth not being less than 1 or more than day 31 of month
                 while(names[i].birth.day<1 || names[i].birth.day>31){
                     printf("Invalid day!\nPlease reenter day of birth:");
                     scanf("%d",&names[i].birth.day);
                 }
                 printf("Insert month of birth:");
                 scanf("%d",&names[i].birth.month);
+                //Validating the month of birth not being less than 1 or more than month 12 of year
                 while(names[i].birth.month<1 || names[i].birth.month>12){
                     printf("Invalid month!\nPlease reenter month of birth:");
                     scanf("%d",&names[i].birth.month);
                 }
                 printf("Insert year of birth:");
                 scanf("%d",&names[i].birth.year);
+                //Validating the year of birth being within a reasonable range
                 while(names[i].birth.year<1900 || names[i].birth.year>2019){
                     printf("Invalid year!\n Please reenter year of birth:");
                     scanf("%d",&names[i].birth.year);
@@ -497,6 +505,7 @@ void modify(FILE*fp)
 
 void sort_by_lastName(){
         int k,temp2,cmp1;
+        //Sorting using bubble sort algorithm with O(n^2)
         for(i=0;i<ending-1;i++){
         for(k=0;k<ending-i-1;k++){
             temp2=k;
@@ -517,6 +526,7 @@ To sort the contacts by means of date of birth in ascending form
 
 void sort_by_DOB(){
     int temp2,k;
+    //Sorting using bubble sort algorithm with O(n^2)
     for(i=0;i<ending-1;i++){
         for(k=0;k<ending-i-1;k++){
             temp2=k+1;
@@ -581,6 +591,7 @@ void save(FILE*fp){
     fp=fopen("project.txt","w");
                 i=0;
                 printf("ending is:%d",ending);
+                //Saving data in a comma seperated form
                 while(i<ending){
                     fprintf(fp,"%s,%s,%d-%d-%d,%s,%s,%d\n",names[i].last_name,
                             names[i].first_name,names[i].birth.day,
