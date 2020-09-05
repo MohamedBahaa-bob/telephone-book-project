@@ -633,6 +633,7 @@ int main()
     printf("\nRunning your choice...\n\n");
 
     switch(option){
+        //To load the data from the text file
         case 1:
             loaded=1;
             load(fp);
@@ -640,12 +641,14 @@ int main()
             ending=temp;
         break;
 
+        //To search for the contacts from the loaded file
         case 2:
             if(loaded!=1){
             break;}
         search();
         break;
 
+        //To add a new contact to the list of records
         case 3:
             if(loaded!=1){
             break;}
@@ -653,6 +656,7 @@ int main()
             ending=temp;
             break;
 
+        //To delete a contact from the list of records 
         case 4:
             if(loaded!=1){
             break;}
@@ -660,12 +664,14 @@ int main()
             ending=temp;
             break;
 
+        //To modify a record found in the data
         case 5:
             if(loaded!=1){
             break;}
             modify(fp);
             break;
 
+        //To print a contact with the details found in the list 
         case 6:
             if(loaded!=1){
             break;}
@@ -673,12 +679,14 @@ int main()
             ending=temp;
             break;
 
+        //To save the list after all the changes have been done
         case 7:
             if(loaded!=1){
             break;}
             save(fp);
             break;
 
+        //To quit the program and stop its execution
         case 8:
         option=quit();
         break;
