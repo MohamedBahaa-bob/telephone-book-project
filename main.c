@@ -136,7 +136,7 @@ void search(){
 }else if(identifier==0){
         char sfname[20],saddress[50],slname[20],semail[50],sphone[20],null[5]={'\0'},bluff;
         ending++;
-
+        //gets() is used here instead of scanf() in case one of the fields contains whitespace as scanf() won't read more than a single word
         printf("Press enter to skip a search field\n");
 
         scanf("%c", &bluff);
